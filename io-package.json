@@ -104,6 +104,7 @@
       "extIcon": "https://raw.githubusercontent.com/Vertumnus/ioBroker.googleauth/master/admin/logo-google.svg",
       "readme": "https://raw.githubusercontent.com/Vertumnus/ioBroker.googleauth/master/README.md",
       "loglevel": "info",
+      "tier": 2,
       "mode": "extension",
       "singleton": true,
       "type": "utility",
