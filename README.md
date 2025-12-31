@@ -80,7 +80,7 @@ After this first time login, on further logins, you only need to push the **Sign
 ## License
 MIT License
 
-Copyright (c) 2021 [Armin Junge](mailto:armin.junge.81@gmail.com)
+Copyright (c) 2021-2026 [Armin Junge](mailto:armin.junge.81@gmail.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
