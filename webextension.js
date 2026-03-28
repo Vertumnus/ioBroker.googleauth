@@ -2,7 +2,7 @@
 /*eslint quotes: ["error", "single"]*/
 /*eslint-env es6*/
 
-const path = require('path')
+const path = require('node:path')
 const express = require('express')
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
