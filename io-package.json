@@ -1,144 +1,148 @@
 {
-   "common": {
-      "name": "googleauth",
-      "version": "0.3.4",
-      "news": {
-         "0.1.1": {
-            "en": "Ready for Beta",
-            "de": "Bereit für die Beta",
-            "ru": "Готов к бета-версии",
-            "pt": "Pronto para Beta",
-            "nl": "Klaar voor bèta",
-            "fr": "Prêt pour la bêta",
-            "it": "Pronto per la beta",
-            "es": "Listo para Beta",
-            "pl": "Gotowy do wersji beta",
-            "zh-cn": "准备测试版"
-         },
-         "0.2.0": {
-            "en": "Extraction of login page into own web extension adapter (weblogin)",
-            "de": "Extraktion der Anmeldeseite in einen eigenen Web-Erweiterungsadapter (weblogin)",
-            "ru": "Извлечение страницы входа в собственный адаптер веб-расширения (weblogin)",
-            "pt": "Extração da página de login no próprio adaptador de extensão da web (weblogin)",
-            "nl": "Extractie van inlogpagina in eigen webextensie-adapter (weblogin)",
-            "fr": "Extraction de la page de connexion dans son propre adaptateur d'extension Web (weblogin)",
-            "it": "Estrazione della pagina di accesso nel proprio adattatore di estensione web (weblogin)",
-            "es": "Extracción de la página de inicio de sesión en el propio adaptador de extensión web (weblogin)",
-            "pl": "Wyodrębnienie strony logowania do własnego adaptera rozszerzenia internetowego (weblogin)",
-            "zh-cn": "将登录页面提取到自己的Web扩展适配器（weblogin）中"
-         },
-         "0.2.3": {
-            "en": "Preparation for publishing in ioBroker.repositories",
-            "de": "Vorbereitung für die Veröffentlichung in ioBroker.repositories",
-            "ru": "Подготовка к публикации в ioBroker.repositories",
-            "pt": "Preparação para publicação em ioBroker.repositories",
-            "nl": "Voorbereiding voor publicatie in ioBroker.repositories",
-            "fr": "Préparation à la publication dans ioBroker.repositories",
-            "it": "Preparazione per la pubblicazione in ioBroker.repositories",
-            "es": "Preparación para publicar en ioBroker.repositories",
-            "pl": "Przygotowanie do publikacji w ioBroker.repositories",
-            "zh-cn": "准备在ioBroker.repositories中发布"
-         },
-         "0.3.0": {
-            "en": "Moving googleId from common part to native part of user data",
-            "de": "Verschieben von googleId vom allgemeinen Teil zum nativen Teil der Benutzerdaten",
-            "ru": "Перенос googleId из общей части в собственную часть пользовательских данных",
-            "pt": "Movendo googleId da parte comum para a parte nativa dos dados do usuário",
-            "nl": "GoogleId verplaatsen van gemeenschappelijk deel naar native deel van gebruikersgegevens",
-            "fr": "Déplacement de googleId de la partie commune vers la partie native des données utilisateur",
-            "it": "Spostamento di googleId dalla parte comune alla parte nativa dei dati utente",
-            "es": "Mover googleId de la parte común a la parte nativa de los datos del usuario",
-            "pl": "Przenoszenie googleId z części wspólnej do natywnej części danych użytkownika",
-            "zh-cn": "将googleId从用户数据的通用部分移动到本机部分"
-         },
-         "0.3.4": {
-            "en": "Fixing some quality issues",
-            "de": "Behebung einiger Qualitätsprobleme",
-            "ru": "Исправление некоторых проблем с качеством",
-            "pt": "Corrigindo alguns problemas de qualidade",
-            "nl": "Enkele kwaliteitsproblemen oplossen",
-            "fr": "Résoudre certains problèmes de qualité",
-            "it": "Risolvere alcuni problemi di qualità",
-            "es": "Solucionar algunos problemas de calidad",
-            "pl": "Naprawianie niektórych problemów z jakością",
-            "zh-cn": "解决一些质量问题"
-         }
+  "common": {
+    "name": "googleauth",
+    "version": "0.3.4",
+    "news": {
+      "0.1.1": {
+        "en": "Ready for Beta",
+        "de": "Bereit für die Beta",
+        "ru": "Готов к бета-версии",
+        "pt": "Pronto para Beta",
+        "nl": "Klaar voor bèta",
+        "fr": "Prêt pour la bêta",
+        "it": "Pronto per la beta",
+        "es": "Listo para Beta",
+        "pl": "Gotowy do wersji beta",
+        "zh-cn": "准备测试版"
       },
-      "title": "Google Authentication",
-      "titleLang": {
-         "en": "Google Authentication",
-         "de": "Google-Authentifizierung",
-         "ru": "Google аутентификация",
-         "pt": "Autenticação Google",
-         "nl": "Google-verificatie",
-         "fr": "Authentification Google",
-         "it": "Autenticazione di Google",
-         "es": "Autenticación de Google",
-         "pl": "Uwierzytelnianie Google",
-         "zh-cn": "Google认证"
+      "0.2.0": {
+        "en": "Extraction of login page into own web extension adapter (weblogin)",
+        "de": "Extraktion der Anmeldeseite in einen eigenen Web-Erweiterungsadapter (weblogin)",
+        "ru": "Извлечение страницы входа в собственный адаптер веб-расширения (weblogin)",
+        "pt": "Extração da página de login no próprio adaptador de extensão da web (weblogin)",
+        "nl": "Extractie van inlogpagina in eigen webextensie-adapter (weblogin)",
+        "fr": "Extraction de la page de connexion dans son propre adaptateur d'extension Web (weblogin)",
+        "it": "Estrazione della pagina di accesso nel proprio adattatore di estensione web (weblogin)",
+        "es": "Extracción de la página de inicio de sesión en el propio adaptador de extensión web (weblogin)",
+        "pl": "Wyodrębnienie strony logowania do własnego adaptera rozszerzenia internetowego (weblogin)",
+        "zh-cn": "将登录页面提取到自己的Web扩展适配器（weblogin）中"
       },
-      "desc": {
-         "en": "Login on webserver via your Google Account",
-         "de": "Melde dich über dein Google-Konto auf dem Webserver an",
-         "ru": "Войдите на веб-сервер через свою учетную запись Google",
-         "pt": "Faça login no servidor da web por meio da sua conta do Google",
-         "nl": "Log in op de webserver via uw Google-account",
-         "fr": "Connectez-vous sur le serveur Web via votre compte Google",
-         "it": "Accedi al server web tramite il tuo account Google",
-         "es": "Inicie sesión en el servidor web a través de su cuenta de Google",
-         "pl": "Zaloguj się na serwerze internetowym za pośrednictwem swojego konta Google",
-         "zh-cn": "通过您的Google帐户在网络服务器上登录"
+      "0.2.3": {
+        "en": "Preparation for publishing in ioBroker.repositories",
+        "de": "Vorbereitung für die Veröffentlichung in ioBroker.repositories",
+        "ru": "Подготовка к публикации в ioBroker.repositories",
+        "pt": "Preparação para publicação em ioBroker.repositories",
+        "nl": "Voorbereiding voor publicatie in ioBroker.repositories",
+        "fr": "Préparation à la publication dans ioBroker.repositories",
+        "it": "Preparazione per la pubblicazione in ioBroker.repositories",
+        "es": "Preparación para publicar en ioBroker.repositories",
+        "pl": "Przygotowanie do publikacji w ioBroker.repositories",
+        "zh-cn": "准备在ioBroker.repositories中发布"
       },
-      "authors": [
-         "Armin Junge <armin.junge.81@gmail.com>"
-      ],
-      "keywords": [
-         "web",
-         "Authentication",
-         "Google"
-      ],
-      "license": "MIT",
-      "platform": "Javascript/Node.js",
-      "icon": "admin/logo-google.svg",
-      "enabled": true,
-      "extIcon": "https://raw.githubusercontent.com/Vertumnus/ioBroker.googleauth/master/admin/logo-google.svg",
-      "readme": "https://raw.githubusercontent.com/Vertumnus/ioBroker.googleauth/master/README.md",
-      "loglevel": "info",
-      "mode": "extension",
-      "singleton": true,
-      "type": "utility",
-      "webExtension": "webextension.js",
-      "onlyWWW": true,
-      "compact": true,
-      "materialize": true,
-      "connectionType": "local",
-      "dataSource": "assumption",
-      "globalDependencies": [
-         {
-            "admin": ">=4.0.9"
-         }
-      ],
-      "dependencies": [
-         {
-            "js-controller": ">=3.0.0",
-            "web": ">=3.4.0",
-            "weblogin": ">=0.1.0"
-         }
-      ],
-      "restartAdapters": ["web"]
-   },
-   "protectedNative": [
-      "clientId",
-      "clientSecret"
-   ],
-   "encryptedNative": [
-      "clientSecret"
-   ],
-   "native": {
-      "webInstance": "*",
-      "clientId": "",
-      "clientSecret": ""
-   },
-   "objects": [],
-   "instanceObjects": []
+      "0.3.0": {
+        "en": "Moving googleId from common part to native part of user data",
+        "de": "Verschieben von googleId vom allgemeinen Teil zum nativen Teil der Benutzerdaten",
+        "ru": "Перенос googleId из общей части в собственную часть пользовательских данных",
+        "pt": "Movendo googleId da parte comum para a parte nativa dos dados do usuário",
+        "nl": "GoogleId verplaatsen van gemeenschappelijk deel naar native deel van gebruikersgegevens",
+        "fr": "Déplacement de googleId de la partie commune vers la partie native des données utilisateur",
+        "it": "Spostamento di googleId dalla parte comune alla parte nativa dei dati utente",
+        "es": "Mover googleId de la parte común a la parte nativa de los datos del usuario",
+        "pl": "Przenoszenie googleId z części wspólnej do natywnej części danych użytkownika",
+        "zh-cn": "将googleId从用户数据的通用部分移动到本机部分"
+      },
+      "0.3.4": {
+        "en": "Fixing some quality issues",
+        "de": "Behebung einiger Qualitätsprobleme",
+        "ru": "Исправление некоторых проблем с качеством",
+        "pt": "Corrigindo alguns problemas de qualidade",
+        "nl": "Enkele kwaliteitsproblemen oplossen",
+        "fr": "Résoudre certains problèmes de qualité",
+        "it": "Risolvere alcuni problemi di qualità",
+        "es": "Solucionar algunos problemas de calidad",
+        "pl": "Naprawianie niektórych problemów z jakością",
+        "zh-cn": "解决一些质量问题"
+      }
+    },
+    "title": "Google Authentication",
+    "titleLang": {
+      "en": "Google Authentication",
+      "de": "Google-Authentifizierung",
+      "ru": "Google аутентификация",
+      "pt": "Autenticação Google",
+      "nl": "Google-verificatie",
+      "fr": "Authentification Google",
+      "it": "Autenticazione di Google",
+      "es": "Autenticación de Google",
+      "pl": "Uwierzytelnianie Google",
+      "zh-cn": "Google认证"
+    },
+    "desc": {
+      "en": "Login on webserver via your Google Account",
+      "de": "Melde dich über dein Google-Konto auf dem Webserver an",
+      "ru": "Войдите на веб-сервер через свою учетную запись Google",
+      "pt": "Faça login no servidor da web por meio da sua conta do Google",
+      "nl": "Log in op de webserver via uw Google-account",
+      "fr": "Connectez-vous sur le serveur Web via votre compte Google",
+      "it": "Accedi al server web tramite il tuo account Google",
+      "es": "Inicie sesión en el servidor web a través de su cuenta de Google",
+      "pl": "Zaloguj się na serwerze internetowym za pośrednictwem swojego konta Google",
+      "zh-cn": "通过您的Google帐户在网络服务器上登录"
+    },
+    "authors": [
+      "Armin Junge <armin.junge.81@gmail.com>"
+    ],
+    "keywords": [
+      "web",
+      "Authentication",
+      "Google"
+    ],
+    "license": "MIT",
+    "platform": "Javascript/Node.js",
+    "icon": "admin/logo-google.svg",
+    "enabled": true,
+    "extIcon": "https://raw.githubusercontent.com/Vertumnus/ioBroker.googleauth/master/admin/logo-google.svg",
+    "readme": "https://raw.githubusercontent.com/Vertumnus/ioBroker.googleauth/master/README.md",
+    "loglevel": "info",
+    "mode": "extension",
+    "singleton": true,
+    "type": "utility",
+    "webExtension": "webextension.js",
+    "onlyWWW": true,
+    "compact": true,
+    "connectionType": "local",
+    "dataSource": "assumption",
+    "globalDependencies": [
+      {
+        "admin": ">=4.0.9"
+      }
+    ],
+    "dependencies": [
+      {
+        "js-controller": ">=3.0.0",
+        "web": ">=3.4.0",
+        "weblogin": ">=0.1.0"
+      }
+    ],
+    "restartAdapters": [
+      "web"
+    ],
+    "adminUI": {
+      "config": "materialize"
+    }
+  },
+  "protectedNative": [
+    "clientId",
+    "clientSecret"
+  ],
+  "encryptedNative": [
+    "clientSecret"
+  ],
+  "native": {
+    "webInstance": "*",
+    "clientId": "",
+    "clientSecret": ""
+  },
+  "objects": [],
+  "instanceObjects": []
 }
