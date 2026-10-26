@@ -1,7 +1,7 @@
 {
    "common": {
       "name": "googleauth",
-      "version": "0.3.4",
+      "version": "0.3.5",
       "news": {
          "0.1.1": {
             "en": "Ready for Beta",
@@ -51,7 +51,7 @@
             "pl": "Przenoszenie googleId z części wspólnej do natywnej części danych użytkownika",
             "zh-cn": "将googleId从用户数据的通用部分移动到本机部分"
          },
-         "0.3.4": {
+         "0.3.5": {
             "en": "Fixing some quality issues",
             "de": "Behebung einiger Qualitätsprobleme",
             "ru": "Исправление некоторых проблем с качеством",
@@ -121,8 +121,7 @@
       "dependencies": [
          {
             "js-controller": ">=3.0.0",
-            "web": ">=3.4.0",
-            "weblogin": ">=0.1.0"
+            "web": ">=3.4.0"
          }
       ],
       "restartAdapters": ["web"]

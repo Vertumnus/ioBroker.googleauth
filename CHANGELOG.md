@@ -1,4 +1,4 @@
-## 0.3.3 (2021-05-12)
+## 0.3.5 (2021-05-12)
 
 Fixing some quality issues
 
