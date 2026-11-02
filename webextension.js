@@ -26,6 +26,7 @@ class WebExtension {
       this.config = instanceSettings.native
 
       passport.serializeUser((user, done) => {
+         adapter.log.debug(instanceSettings.common.name + ': serialize user ' + JSON.stringify(user))
          done(null, user.user)
       })
       passport.use(new GoogleStrategy({
