@@ -84,15 +84,20 @@ class WebExtension {
       app.use('/login/google/img', express.static(path.join(__dirname, 'www/img')))
       
       app.post('/login/google', (req, res, next) => {
-         // inject another serialization due to wrong handling in Web Adapter!
-         passport.serializeUser((user, done) => {
-            adapter.log.debug(instanceSettings.common.name + ': serialize user ' + JSON.stringify(user))
-            done(null, user.user)
-         })
+         // // inject another serialization due to wrong handling in Web Adapter!
+         // passport.serializeUser((user, done) => {
+         //    adapter.log.debug(instanceSettings.common.name + ': serialize user ' + JSON.stringify(user))
+         //    done(null, user.user)
+         // })
          // on first time login handle next middleware (local authentication) in calling chain,
          // otherwise handle immediately next fitting route (google authentication)
          next(req.body.firsttime?null:'route')
-      }, passport.authenticate('local'))
+      }, passport.authenticate('local', (err, user) => {
+         if(err){
+            return adapter.log.warn(instanceSettings.common.name + ': User login failed - ' + err)
+         }
+         adapter.log.debug(instanceSettings.common.name + ': User logged in -> ' + JSON.stringify(user))
+      }))
       app.post('/login/google', (req, res, next) => {
          let bStayLoggedIn = req.body.stayloggedin === 'true' || req.body.stayloggedin === true || req.body.stayloggedin === 'on'
          passport.authenticate('google', {
