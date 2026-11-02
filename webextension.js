@@ -113,7 +113,8 @@ class WebExtension {
       })
       
       app.get('/login/google/cb', passport.authenticate('google', {
-         failureRedirect: '/login'
+         failureRedirect: '/login',
+         keepSessionInfo: true
       }), (req, res) => {
          let oState = JSON.parse(req.query.state)
          let sTarget = '/'
