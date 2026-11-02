@@ -51,7 +51,7 @@ class WebExtension {
 
                if(oUser.native && oUser.native.googleId === profile.id){
                   adapter.log.debug(instanceSettings.common.name + ': User found -> ' + sUserName)
-                  return done(null, sUserName)
+                  return done(null, { user: sUserName })
                }
                if(sUserName === req.user || sUserId === `system.user.${req.user}`){
                   sUserObjectId = sUserId
