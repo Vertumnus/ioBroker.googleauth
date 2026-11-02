@@ -25,10 +25,6 @@ class WebExtension {
    constructor(server, webSettings, adapter, instanceSettings, app) {
       this.config = instanceSettings.native
 
-      passport.serializeUser((user, done) => {
-         adapter.log.debug(instanceSettings.common.name + ': serialize user ' + JSON.stringify(user))
-         done(null, user.user)
-      })
       passport.use(new GoogleStrategy({
          clientID: this.config.clientId,
          clientSecret: this.config.clientSecret,
@@ -88,6 +84,11 @@ class WebExtension {
       app.use('/login/google/img', express.static(path.join(__dirname, 'www/img')))
       
       app.post('/login/google', (req, res, next) => {
+         // inject another serialization due to wrong handling in Web Adapter!
+         passport.serializeUser((user, done) => {
+            adapter.log.debug(instanceSettings.common.name + ': serialize user ' + JSON.stringify(user))
+            done(null, user.user)
+         })
          // on first time login handle next middleware (local authentication) in calling chain,
          // otherwise handle immediately next fitting route (google authentication)
          next(req.body.firsttime?null:'route')
