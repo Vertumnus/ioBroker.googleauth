@@ -33,7 +33,6 @@ class WebExtension {
          passReqToCallback: true,
          proxy: this.config.proxy
       }, (req, accessToken, refreshToken, profile, done) => {
-         adapter.log.debug(instanceSettings.common.name + ': Logged in user -> ' + req.user)
          // get all users
          adapter.log.debug(instanceSettings.common.name + ': Check users for Google ID')
          adapter.getForeignObjects('system.user.*', 'user', (err, oUsers) => {
@@ -51,21 +50,22 @@ class WebExtension {
 
                if(oUser.native && oUser.native.googleId === profile.id){
                   adapter.log.debug(instanceSettings.common.name + ': User found -> ' + sUserName)
-                  return done(null, { user: sUserName })
+                  return done(null, sUserName)
                }
-               if(sUserName === req.user || sUserId === `system.user.${req.user}`){
+               if(req.isAuthenticated() && (sUserName === req.user || sUserId === `system.user.${req.user}`)){
                   sUserObjectId = sUserId
                }
             }
-            // No user found, so take the local logged in user and assign google id
-            adapter.log.debug(instanceSettings.common.name + ': User=' + sUserObjectId + ', Loginname=' + req.user)
 
             // no local logged in user? -> error
-            if(!req.user || !sUserObjectId){ 
+            if(!req.isAuthenticated()){ 
                adapter.log.debug(instanceSettings.common.name + ': No user logged in!')
                return done(null, false, { error: 'Login2Register' })
             }
-            
+
+            // No user found, so take the local logged in user and assign google id
+            adapter.log.debug(instanceSettings.common.name + ': User=' + sUserObjectId + ', Loginname=' + req.user)
+
             adapter.extendForeignObject(sUserObjectId, {
                native: {
                   googleId: profile.id
@@ -84,16 +84,15 @@ class WebExtension {
       app.use('/login/google/img', express.static(path.join(__dirname, 'www/img')))
       
       app.post('/login/google', (req, res, next) => {
-         if(req.body.firsttime){
+         if(this.isTrue(req.body.firsttime)){
             passport.authenticate('local', (err, user) => {
                if(err){
                   return adapter.log.warn(instanceSettings.common.name + ': User login failed - ' + err)
                }
-               adapter.log.debug(instanceSettings.common.name + ': User logged in -> ' + JSON.stringify(user))
+               adapter.log.debug(instanceSettings.common.name + ': User logged in local -> ' + JSON.stringify(user))
                req.login(user.user, err => {
                   if(err) 
                      return next(err)
-                  req.user = user
                   next()
                })
             })(req, res, next)
@@ -101,10 +100,7 @@ class WebExtension {
          else{
             next()
          }
-         // // on first time login handle next middleware (local authentication) in calling chain,
-         // // otherwise handle immediately next fitting route (google authentication)
-         // next(req.body.firsttime?null:'route')
-      }, )
+      })
       app.post('/login/google', (req, res, next) => {
          let bStayLoggedIn = req.body.stayloggedin === 'true' || req.body.stayloggedin === true || req.body.stayloggedin === 'on'
          passport.authenticate('google', {
@@ -128,11 +124,15 @@ class WebExtension {
                req.session.cookie.maxAge = ONE_MONTH_SEC * 1000
             }
          }
-         adapter.log.debug(instanceSettings.common.name + ': User logged in via Google; redirect to ' + sTarget)
+         adapter.log.debug(instanceSettings.common.name + ': User ' + req.user + ' logged in via Google; redirect to ' + sTarget)
          res.redirect(sTarget)
       })
       
       adapter.log.info('Google Authentication is ready')
+   }
+
+   isTrue(vValue){
+      return vValue === 'true' || vValue === true || vValue === 'on'
    }
 }
 

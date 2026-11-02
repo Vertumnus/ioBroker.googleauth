@@ -1,7 +1,7 @@
 {
    "common": {
       "name": "googleauth",
-      "version": "0.3.5",
+      "version": "0.4.0",
       "news": {
          "0.1.1": {
             "en": "Ready for Beta",
@@ -62,6 +62,10 @@
             "es": "Solucionar algunos problemas de calidad",
             "pl": "Naprawianie niektórych problemów z jakością",
             "zh-cn": "解决一些质量问题"
+         },
+         "0.4.0": {
+            "en": "Adjustments for web adapter version 8",
+            "de": "Anpassungen für Version 8 des Web Adapters"
          }
       },
       "title": "Google Authentication",
@@ -115,13 +119,13 @@
       "dataSource": "assumption",
       "globalDependencies": [
          {
-            "admin": ">=4.0.9"
+            "admin": ">=8.0.0"
          }
       ],
       "dependencies": [
          {
-            "js-controller": ">=3.0.0",
-            "web": ">=3.4.0"
+            "js-controller": ">=7.2.0",
+            "web": ">=8.0.0"
          }
       ],
       "restartAdapters": ["web"]
