@@ -25,6 +25,9 @@ class WebExtension {
    constructor(server, webSettings, adapter, instanceSettings, app) {
       this.config = instanceSettings.native
 
+      passport.serializeUser((user, done) => {
+         done(null, user.user)
+      })
       passport.use(new GoogleStrategy({
          clientID: this.config.clientId,
          clientSecret: this.config.clientSecret,
@@ -33,7 +36,7 @@ class WebExtension {
          passReqToCallback: true,
          proxy: this.config.proxy
       }, (req, accessToken, refreshToken, profile, done) => {
-         adapter.log.debug(instanceSettings.common.name + ': Logged in user -> ' + req.passport?.session?.user)
+         adapter.log.debug(instanceSettings.common.name + ': Logged in user -> ' + req.user)
          // get all users
          adapter.log.debug(instanceSettings.common.name + ': Check users for Google ID')
          adapter.getForeignObjects('system.user.*', 'user', (err, oUsers) => {
