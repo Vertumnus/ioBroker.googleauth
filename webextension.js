@@ -33,7 +33,7 @@ class WebExtension {
          passReqToCallback: true,
          proxy: this.config.proxy
       }, (req, accessToken, refreshToken, profile, done) => {
-         adapter.log.debug(instanceSettings.common.name + ': Logged in user -> ' + req.user?.user)
+         adapter.log.debug(instanceSettings.common.name + ': Logged in user -> ' + req.passport?.session?.user)
          // get all users
          adapter.log.debug(instanceSettings.common.name + ': Check users for Google ID')
          adapter.getForeignObjects('system.user.*', 'user', (err, oUsers) => {
