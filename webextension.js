@@ -34,6 +34,7 @@ class WebExtension {
          proxy: this.config.proxy
       }, (req, accessToken, refreshToken, profile, done) => {
          // get all users
+         adapter.log.debug(instanceSettings.common.name + ': Check users for Google ID')
          adapter.getForeignObjects('system.user.*', 'user', (err, oUsers) => {
             if(err){
                adapter.log.info(instanceSettings.common.name + ': ' + err)
@@ -48,6 +49,7 @@ class WebExtension {
                let sUserName = oUser.common.name.toString().replace(this.FORBIDDEN_CHARS, '_').replace(/\s/g, '_').replace(/\./g, '_').toLowerCase();
 
                if(oUser.native && oUser.native.googleId === profile.id){
+                  adapter.log.debug(instanceSettings.common.name + ': User found -> ' + sUserName)
                   return done(null, sUserName)
                }
                if(sUserName === req.user || sUserId === `system.user.${req.user}`){
@@ -59,6 +61,7 @@ class WebExtension {
 
             // no local logged in user? -> error
             if(!req.user || !sUserObjectId){ 
+               adapter.log.debug(instanceSettings.common.name + ': No user logged in!')
                return done(null, false, { error: 'Login2Register' })
             }
             
@@ -85,12 +88,11 @@ class WebExtension {
          next(req.body.firsttime?null:'route')
       }, passport.authenticate('local'))
       app.post('/login/google', (req, res, next) => {
-         let oRedirectMatch = /(\?|&)?href=(\/[-_a-zA-Z0-9%./]*)/.exec(decodeURIComponent(req.body.origin))
          let bStayLoggedIn = req.body.stayloggedin === 'true' || req.body.stayloggedin === true || req.body.stayloggedin === 'on'
          passport.authenticate('google', {
             scope: ['profile'],
             state: JSON.stringify({ 
-               href: (oRedirectMatch)?oRedirectMatch[2]:null, // take value of parameter href from second submatch
+               href: req.query.href, // take value of parameter href from second submatch
                stay: bStayLoggedIn
             })
          })(req, res, next)
@@ -108,6 +110,7 @@ class WebExtension {
                req.session.cookie.maxAge = ONE_MONTH_SEC * 1000
             }
          }
+         adapter.log.debug(instanceSettings.common.name + ': User logged in via Google; redirect to ' + sTarget)
          res.redirect(sTarget)
       })
       
