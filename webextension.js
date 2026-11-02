@@ -124,7 +124,7 @@ class WebExtension {
                req.session.cookie.maxAge = ONE_MONTH_SEC * 1000
             }
          }
-         adapter.log.debug(instanceSettings.common.name + ': User ' + req.user + ' logged in via Google; redirect to ' + sTarget)
+         adapter.log.debug(instanceSettings.common.name + ': User ' + req.user + ' logged in (' + req.isAuthenticated() + ') via Google; redirect to ' + sTarget)
          res.redirect(sTarget)
       })
       
