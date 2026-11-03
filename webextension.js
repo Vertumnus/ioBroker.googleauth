@@ -116,7 +116,7 @@ class WebExtension {
       
       app.get('/login/google/cb', (req, res, next) => {
          let oState = JSON.parse(req.query.state)
-         req.session.id = oState.session
+         adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
          next()
       }, passport.authenticate('google', {
          failureRedirect: '/login',
@@ -131,7 +131,7 @@ class WebExtension {
                req.session.cookie.maxAge = ONE_MONTH_SEC * 1000
             }
          }
-         adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
+         adapter.log.debug(instanceSettings.common.name + ': [redirect] Session ID = ' + req.session.id)
          adapter.log.debug(instanceSettings.common.name + ': User ' + req.user + ' logged in (' + req.isAuthenticated() + ') via Google; redirect to ' + sTarget)
          req.session.save(err => {
             if(err)
