@@ -107,7 +107,6 @@ class WebExtension {
          passport.authenticate('google', {
             scope: ['profile'],
             state: JSON.stringify({ 
-               session: req.session.id,
                href: req.query.href, // take value of parameter href from second submatch
                stay: this.isTrue(req.body.stayloggedin)
             })
@@ -115,12 +114,14 @@ class WebExtension {
       })
       
       app.get('/login/google/cb', (req, res, next) => {
-         let oState = JSON.parse(req.query.state)
          adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
          next()
       }, passport.authenticate('google', {
          failureRedirect: '/login',
          keepSessionInfo: true
+      }, (err, user) => {
+         adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
+         next()
       }), (req, res) => {
          let oState = JSON.parse(req.query.state)
          let sTarget = '/'
