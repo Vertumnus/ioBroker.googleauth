@@ -84,6 +84,7 @@ class WebExtension {
       app.use('/login/google/img', express.static(path.join(__dirname, 'www/img')))
       
       app.post('/login/google', (req, res, next) => {
+         adapter.log.debug(instanceSettings.common.name + ': [auth] Session ID = ' + req.session.id)
          if(this.isTrue(req.body.firsttime)){
             passport.authenticate('local', (err, user) => {
                if(err){
@@ -102,12 +103,11 @@ class WebExtension {
          }
       })
       app.post('/login/google', (req, res, next) => {
-         let bStayLoggedIn = req.body.stayloggedin === 'true' || req.body.stayloggedin === true || req.body.stayloggedin === 'on'
          passport.authenticate('google', {
             scope: ['profile'],
             state: JSON.stringify({ 
                href: req.query.href, // take value of parameter href from second submatch
-               stay: bStayLoggedIn
+               stay: this.isTrue(req.body.stayloggedin)
             })
          })(req, res, next)
       })
@@ -125,8 +125,11 @@ class WebExtension {
                req.session.cookie.maxAge = ONE_MONTH_SEC * 1000
             }
          }
+         adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
          adapter.log.debug(instanceSettings.common.name + ': User ' + req.user + ' logged in (' + req.isAuthenticated() + ') via Google; redirect to ' + sTarget)
          req.session.save(err => {
+            if(err)
+               adapter.log.warn(instanceSettings.common.name + ': ' + err)
             res.redirect(sTarget)
          })
       })
