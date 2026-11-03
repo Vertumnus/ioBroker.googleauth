@@ -118,30 +118,14 @@ class WebExtension {
          next()
       }, (req, res, next) => {
          passport.authenticate('google', {
-            failureRedirect: '/login',
-            session: false
+            failureRedirect: '/login'
          }, (err, user) => {
             adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id + ' / ' + req.sessionID)
-            const sessionID = req.sessionID
-            req.sessionStore.get(sessionID, (err, data) => {
-               if(err){
+            this.login(req, user, err => {
+               adapter.log.debug(instanceSettings.common.name + ': [cb login] Session ID = ' + req.session.id + ' / ' + req.sessionID)
+               if(err)
                   adapter.log.warn(instanceSettings.common.name + ': ' + err)
-                  return next(err)                  
-               }
-               req.login(user, { session: true, keepSessionInfo: true }, err => {
-                  adapter.log.debug(instanceSettings.common.name + ': [cb login] Session ID = ' + req.session.id + ' / ' + req.sessionID)
-                  if(err){
-                     adapter.log.warn(instanceSettings.common.name + ': ' + err)
-                     return next(err)                  
-                  }
-                  req.sessionID = sessionID
-                  req.sessionStore.createSession(req, data)
-                  req.session.save(err => {
-                     if(err)
-                        adapter.log.warn(instanceSettings.common.name + ': ' + err)
-                     next()
-                  })
-               })
+               next()
             })
          })(req, res, next)
       }, (req, res) => {
@@ -165,6 +149,12 @@ class WebExtension {
 
    isTrue(vValue){
       return vValue === 'true' || vValue === true || vValue === 'on'
+   }
+
+   login(req, user, cb){
+      req.user = user
+      req.session.passport.user = user
+      req.session.save(cb)
    }
 }
 
