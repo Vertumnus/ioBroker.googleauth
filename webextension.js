@@ -122,11 +122,19 @@ class WebExtension {
             session: false
          }, (err, user) => {
             adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id + ' / ' + req.sessionID)
+            const sessionID = req.sessionID
             req.login(user, { session: true, keepSessionInfo: true }, err => {
                adapter.log.debug(instanceSettings.common.name + ': [cb login] Session ID = ' + req.session.id + ' / ' + req.sessionID)
-               if(err) 
-                  return next(err)
-               next()
+               if(err){
+                  adapter.log.warn(instanceSettings.common.name + ': ' + err)
+                  return next(err)                  
+               }
+               req.sessionID = sessionID
+               req.session.save(err => {
+                  if(err)
+                     adapter.log.warn(instanceSettings.common.name + ': ' + err)
+                  next()
+               })
             })
          })(req, res, next)
       }, (req, res) => {
@@ -141,11 +149,8 @@ class WebExtension {
          }
          adapter.log.debug(instanceSettings.common.name + ': [redirect] Session ID = ' + req.session.id + ' / ' + req.sessionID)
          adapter.log.debug(instanceSettings.common.name + ': User ' + req.user + ' logged in (' + req.isAuthenticated() + ') via Google; redirect to ' + sTarget)
-         req.session.save(err => {
-            if(err)
-               adapter.log.warn(instanceSettings.common.name + ': ' + err)
-            res.redirect(sTarget)
-         })
+         
+         res.redirect(sTarget)
       })
       
       adapter.log.info('Google Authentication is ready')
