@@ -129,11 +129,14 @@ class WebExtension {
                   adapter.log.warn(instanceSettings.common.name + ': ' + err)
                   return next(err)                  
                }
-               req.sessionID = sessionID
-               req.session.save(err => {
-                  if(err)
-                     adapter.log.warn(instanceSettings.common.name + ': ' + err)
-                  next()
+               req.sessionStore.get(sessionID, (err, data) => {
+                  req.sessionID = sessionID
+                  req.sessionStore.createSession(req, data)
+                  req.session.save(err => {
+                     if(err)
+                        adapter.log.warn(instanceSettings.common.name + ': ' + err)
+                     next()
+                  })
                })
             })
          })(req, res, next)
