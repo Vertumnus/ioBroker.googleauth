@@ -116,13 +116,15 @@ class WebExtension {
       app.get('/login/google/cb', (req, res, next) => {
          adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
          next()
-      }, passport.authenticate('google', {
-         failureRedirect: '/login',
-         keepSessionInfo: true
-      }, (err, user) => {
-         adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
-         next()
-      }), (req, res) => {
+      }, (req, res, next) => {
+         passport.authenticate('google', {
+            failureRedirect: '/login',
+            keepSessionInfo: true
+         }, (err, user) => {
+            adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
+            next()
+         })(req, res, next)
+      }, (req, res) => {
          let oState = JSON.parse(req.query.state)
          let sTarget = '/'
          if(oState){
