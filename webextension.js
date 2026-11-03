@@ -122,7 +122,11 @@ class WebExtension {
             keepSessionInfo: true
          }, (err, user) => {
             adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id)
-            next()
+            req.login(user, err => {
+               if(err) 
+                  return next(err)
+               next()
+            })
          })(req, res, next)
       }, (req, res) => {
          let oState = JSON.parse(req.query.state)
