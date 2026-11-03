@@ -153,6 +153,9 @@ class WebExtension {
 
    login(req, user, cb){
       req.user = user
+      if(!req.session.passport){
+         req.session.passport = {}
+      }
       req.session.passport.user = user
       req.session.save(cb)
    }
