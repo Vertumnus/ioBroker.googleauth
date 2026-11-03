@@ -126,8 +126,9 @@ class WebExtension {
             }
          }
          adapter.log.debug(instanceSettings.common.name + ': User ' + req.user + ' logged in (' + req.isAuthenticated() + ') via Google; redirect to ' + sTarget)
-         req.session.save()
-         res.redirect(sTarget)
+         req.session.save(err => {
+            res.redirect(sTarget)
+         })
       })
       
       adapter.log.info('Google Authentication is ready')
