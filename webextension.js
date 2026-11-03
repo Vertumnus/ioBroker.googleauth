@@ -123,13 +123,17 @@ class WebExtension {
          }, (err, user) => {
             adapter.log.debug(instanceSettings.common.name + ': [cb] Session ID = ' + req.session.id + ' / ' + req.sessionID)
             const sessionID = req.sessionID
-            req.login(user, { session: true, keepSessionInfo: true }, err => {
-               adapter.log.debug(instanceSettings.common.name + ': [cb login] Session ID = ' + req.session.id + ' / ' + req.sessionID)
+            req.sessionStore.get(sessionID, (err, data) => {
                if(err){
                   adapter.log.warn(instanceSettings.common.name + ': ' + err)
                   return next(err)                  
                }
-               req.sessionStore.get(sessionID, (err, data) => {
+               req.login(user, { session: true, keepSessionInfo: true }, err => {
+                  adapter.log.debug(instanceSettings.common.name + ': [cb login] Session ID = ' + req.session.id + ' / ' + req.sessionID)
+                  if(err){
+                     adapter.log.warn(instanceSettings.common.name + ': ' + err)
+                     return next(err)                  
+                  }
                   req.sessionID = sessionID
                   req.sessionStore.createSession(req, data)
                   req.session.save(err => {
