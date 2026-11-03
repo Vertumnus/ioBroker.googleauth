@@ -33,6 +33,7 @@ class WebExtension {
          passReqToCallback: true,
          proxy: this.config.proxy
       }, (req, accessToken, refreshToken, profile, done) => {
+         adapter.log.debug(instanceSettings.common.name + ': [Strategy] Session ID = ' + req.session.id)
          // get all users
          adapter.log.debug(instanceSettings.common.name + ': Check users for Google ID')
          adapter.getForeignObjects('system.user.*', 'user', (err, oUsers) => {
@@ -106,13 +107,18 @@ class WebExtension {
          passport.authenticate('google', {
             scope: ['profile'],
             state: JSON.stringify({ 
+               session: req.session.id,
                href: req.query.href, // take value of parameter href from second submatch
                stay: this.isTrue(req.body.stayloggedin)
             })
          })(req, res, next)
       })
       
-      app.get('/login/google/cb', passport.authenticate('google', {
+      app.get('/login/google/cb', (req, res, next) => {
+         let oState = JSON.parse(req.query.state)
+         req.session.id = oState.session
+         next()
+      }, passport.authenticate('google', {
          failureRedirect: '/login',
          keepSessionInfo: true
       }), (req, res) => {
